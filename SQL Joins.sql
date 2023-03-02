@@ -12,14 +12,18 @@ WHERE C.NAME = 'Computers';
  where r.Rating = 5;
  
 /* joins: find the employee with the most total quantity sold.  use the sum() function and group by */
-SELECT e.FirstName, e.LastName, Sum(s.Quantity) AS Total FROM sales AS s
-INNER JOIN employees AS e ON e.EmployeeID = s.EmployeeID
+SELECT e.FirstName, e.LastName, Sum(s.Quantity) AS Total 
+FROM sales AS s
+INNER JOIN employees AS e 
+ON e.EmployeeID = s.EmployeeID
 GROUP BY e.EmployeeID
 ORDER BY Total DESC;
 
 /* joins: find the name of the department, and the name of the category for Appliances and Games */
-SELECT d.Name as 'Department Name', c.Name as 'Category Name' FROM departments as d
-INNER JOIN categories as c ON c.DepartmentID = d.DepartmentID
+SELECT d.Name as 'Department Name', c.Name as 'Category Name' 
+FROM departments as d
+INNER JOIN categories as c 
+ON c.DepartmentID = d.DepartmentID
 WHERE c.Name = 'Appliances' OR c.Name = 'Games';
 
 /* joins: find the product name, total # sold, and total price sold,
@@ -32,7 +36,8 @@ WHERE p.ProductID = 97;
 /* joins: find Product name, reviewer name, rating, and comment on the Visio TV. (only return for the lowest rating!) */
 SELECT p.Name, r.Reviewer, r.Rating, r.Comment
 FROM products as p
-INNER JOIN reviews as r ON r.ProductID = p.ProductID
+INNER JOIN reviews as r 
+ON r.ProductID = p.ProductID
 WHERE p.ProductID = 857 AND r.Rating = 1;
 
 -- ------------------------------------------ Extra - May be difficult
@@ -42,3 +47,11 @@ This query should return:
 -  the employee's first and last name
 -  the name of each product
 -  and how many of that product they sold */
+
+SELECT e.employeeID, e.firstname, e.lastname, p.NAME,
+SUM(s.quantity)AS "Total Sold"
+FROM employees as e
+INNER JOIN sales AS s ON e.employeeID = s.employeeID
+INNER JOIN products AS p ON p.ProductID = s.ProductID
+GROUP BY e.employeeID, p.productID
+ORDER BY e.FirstName;
